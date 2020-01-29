@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
-import sys, os, filecmp
-from datetime import date
+import sys, os, filecmp, datetime, getopt
 
 def slack():
    os.system('touch /opt/diff.txt')
@@ -10,6 +9,8 @@ def main(argv):
    #Variables
    today = datetime.date.today()
    yesterday = today - datetime.timedelta(days = 1)
+   today = str(today)
+   yesterday = str(yesterday)
    flags = ''
    ip = ''
    
@@ -27,15 +28,14 @@ def main(argv):
          flag = arg
       elif opt in ("-i", "--ip"):
          ip = arg
-   print ('flags are "', flags)
-   print ('IP is "', ip)
    
    #Call nmap with args
-   os.system('nmap ' + flags + ' ' + ip + ' -oX /opt/nmap_diff/scan_'+today+' > /dev/null 2>&1')
+   os.system('nmap ' + flags + ' ' + ip + ' -oG /opt/nmap_diff/scan_'+today+'.gnmap > /dev/null 2>&1')
+   os.system("grep Host: '/opt/nmap_diff/scan_"+today+".gnmap' > '/opt/nmap_diff/scan_"+today+".gnmap'")
 
    #Diff with previous day
-   ft = '/opt/nmap_diff/scan_'+today
-   fy = '/opt/nmap_diff/scan_'+yesterday
+   ft = '/opt/nmap_diff/scan_'+today+'.gnmap'
+   fy = '/opt/nmap_diff/scan_'+yesterday+'.gnmap'
    
    #If difference exists send message to slack (poss as seperate function)
    if filecmp.cmp(ft, fy) == True:
