@@ -31,30 +31,18 @@ def main(argv):
    
    #Call nmap with args
    os.system('nmap ' + flags + ' ' + ip + ' -oG /opt/nmap_diff/scan_'+today+'.gnmap > /dev/null 2>&1')
-   os.system("grep Host: '/opt/nmap_diff/scan_"+today+".gnmap' > '/opt/nmap_diff/scan_"+today+".gnmap'")
+   os.system("grep Host: '/opt/nmap_diff/scan_" +today +".gnmap' > '/opt/nmap_diff/scan_" +today+ ".txt'")
+   os.system("rm /opt/nmap_diff/scan_" +today+ ".txt")
 
    #Diff with previous day
-   ft = '/opt/nmap_diff/scan_'+today+'.gnmap'
-   fy = '/opt/nmap_diff/scan_'+yesterday+'.gnmap'
+   ft = '/opt/nmap_diff/scan_'+today+'.txt'
+   fy = '/opt/nmap_diff/scan_'+yesterday+'.txt'
    
    #If difference exists send message to slack (poss as seperate function)
    if filecmp.cmp(ft, fy) == True:
-      slack()
+      print("True")
+   else:
+      print("False")
 
 if __name__ == "__main__":
    main(sys.argv[1:])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
