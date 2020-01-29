@@ -2,8 +2,9 @@
 
 import sys, os, filecmp, datetime, getopt
 
-def slack():
-   os.system('touch /opt/diff.txt')
+#Sends message to slack group to alert of the changes in scan
+def slack(ip): #add in url from your slack channel
+   os.system('curl -X POST --data-urlencode "payload={\"channel\": \"#notifications\", \"username\": \"alert\", \"text\": \"Nmap Difference discovered. New port open/closed...\"}" https://hooks.slack.com/services/***/***/***')
 
 def main(argv):
    #Variables
@@ -40,7 +41,7 @@ def main(argv):
    
    #If difference exists send message to slack (poss as seperate function)
    if filecmp.cmp(ft, fy) == False:
-      slack()
+      slack(ip)
 
 if __name__ == "__main__":
    main(sys.argv[1:])
