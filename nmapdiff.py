@@ -31,7 +31,7 @@ def main(argv):
    
    #Call nmap with args
    os.system('nmap ' + flags + ' ' + ip + ' -oG /opt/nmap_diff/scan_'+today+'.gnmap > /dev/null 2>&1')
-   os.system("grep Host: /opt/nmap_diff/scan_" +today +".gnmap > /opt/nmap_diff/scan_" +today+ ".txt'")
+   os.system("grep Host: /opt/nmap_diff/scan_" +today +".gnmap > /opt/nmap_diff/scan_" +today+ ".txt")
    os.system("rm /opt/nmap_diff/scan_" +today+ ".gnmap")
 
    #Diff with previous day
@@ -39,10 +39,8 @@ def main(argv):
    fy = '/opt/nmap_diff/scan_'+yesterday+'.txt'
    
    #If difference exists send message to slack (poss as seperate function)
-   if filecmp.cmp(ft, fy) == True:
-      print("True")
-   else:
-      print("False")
+   if filecmp.cmp(ft, fy) == False:
+      slack()
 
 if __name__ == "__main__":
    main(sys.argv[1:])
