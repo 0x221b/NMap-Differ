@@ -31,8 +31,8 @@ def main(argv):
    
    #Call nmap with args
    os.system('nmap ' + flags + ' ' + ip + ' -oG /opt/nmap_diff/scan_'+today+'.gnmap > /dev/null 2>&1')
-   os.system("grep Host: '/opt/nmap_diff/scan_" +today +".gnmap' > '/opt/nmap_diff/scan_" +today+ ".txt'")
-   os.system("rm /opt/nmap_diff/scan_" +today+ ".txt")
+   os.system("grep Host: /opt/nmap_diff/scan_" +today +".gnmap > /opt/nmap_diff/scan_" +today+ ".txt'")
+   os.system("rm /opt/nmap_diff/scan_" +today+ ".gnmap")
 
    #Diff with previous day
    ft = '/opt/nmap_diff/scan_'+today+'.txt'
