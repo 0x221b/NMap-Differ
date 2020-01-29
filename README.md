@@ -5,5 +5,5 @@ Load as daily cronjob in order to run everyday and identify newly open ports. Th
 
 This script has been adapted from the bash nmap differ in 'The Hacker Playbook 3' by Peter Kim, with some of the suggested extra functions.
 
-Replace then * in the slack URL with the details of your slack channel.
+Replace the * in the slack URL with the details of your slack channel.
 ***Only use NMAP and this script on systems you have explicit permission to port scan***
